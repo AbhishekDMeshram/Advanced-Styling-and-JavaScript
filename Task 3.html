@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Styling and JavaScript Examples</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 20px;
+            background-color: #e6ffe6; /* Light green background */
+            color: #386641; /* Dark green text */
+        }
+
+        h1 { /* Style for the main title */
+            color: black;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #8fbc8f; /* Medium sea green border */
+            padding-bottom: 10px;
+            font-size: 3.5em; /* Significantly increased font size */
+        }
+
+        h2 {
+            margin-top: 30px;
+            border-bottom: 2px solid #8fbc8f; /* Medium sea green border */
+            padding-bottom: 10px;
+            color: black; /* Keep h2 titles black */
+        }
+
+        /* --- Responsive Layout Styles --- */
+        .responsive-container {
+            display: flex;
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #f0fff0; /* Honeydew background */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .responsive-sidebar {
+            width: 30%;
+            background-color: #98fb98; /* Pale green sidebar */
+            padding: 15px;
+        }
+
+        .responsive-main-content {
+            width: 70%;
+            padding: 15px;
+        }
+
+        @media (max-width: 600px) {
+            .responsive-container {
+                flex-direction: column;
+            }
+
+            .responsive-sidebar,
+            .responsive-main-content {
+                width: 100%;
+                margin-bottom: 15px;
+            }
+
+            h3 {
+                font-size: 1.2em;
+                color: black; /* Keep h3 titles black */
+            }
+        }
+
+        @media (min-width: 601px) and (max-width: 1024px) {
+            .responsive-sidebar {
+                width: 40%;
+            }
+
+            .responsive-main-content {
+                width: 60%;
+            }
+        }
+
+        /* --- Image Carousel Styles --- */
+        .carousel-container {
+            max-width: 600px;
+            margin: 20px auto;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            background-color: #f0fff0; /* Honeydew background */
+        }
+
+        .carousel-slide {
+            display: flex;
+            width: 200%; /* Now 2 images, so 200% */
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-image {
+            width: 50%; /* Each image takes 50% of the slide */
+            flex-shrink: 0;
+            height: auto;
+            object-fit: contain;
+            max-height: 400px; /* Adjust as needed */
+        }
+
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5); /* Keep button background dark */
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            z-index: 10;
+        }
+
+        .carousel-button.prev {
+            left: 10px;
+            border-radius: 5px;
+        }
+
+        .carousel-button.next {
+            right: 10px;
+            border-radius: 5px;
+        }
+
+        /* --- Quiz Styles --- */
+        .quiz-container {
+            background-color: #f0fff0; /* Honeydew background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 20px auto;
+            max-width: 600px;
+        }
+
+        .quiz-question {
+            font-size: 1em;
+            margin-bottom: 15px;
+            color: black; /* Keep quiz question black */
+        }
+
+        .quiz-answer-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .quiz-answer-buttons button {
+            padding: 8px 15px;
+            border: 1px solid #8fbc8f; /* Medium sea green border */
+            border-radius: 5px;
+            background-color: #e0eee0; /* Light green answer button */
+            cursor: pointer;
+            font-size: 0.9em;
+            color: #386641; /* Dark green text */
+        }
+
+        .quiz-answer-buttons button:hover {
+            background-color: #a9d18e; /* Light moss green hover */
+        }
+
+        .quiz-next-button {
+            padding: 8px 15px;
+            background-color: #3cb371; /* Medium sea green next button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            display: none;
+            margin-top: 10px;
+        }
+
+        .quiz-next-button:hover {
+            background-color: #2e8b57; /* Sea green hover */
+        }
+
+        .quiz-results {
+            font-size: 1em;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #2e8b57; /* Sea green results text */
+        }
+
+        /* --- Joke Fetcher Styles --- */
+        .joke-fetcher-container {
+            background-color: #f0fff0; /* Honeydew background */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin: 20px auto;
+            max-width: 500px;
+        }
+
+        h3 { /* Targeting the h3 inside the joke fetcher */
+            color: black; /* Keep joke fetcher title black */
+        }
+
+        #joke-text {
+            font-size: 1em;
+            margin-bottom: 15px;
+            color: #386641; /* Dark green joke text */
+        }
+
+        #fetch-joke-btn {
+            padding: 8px 15px;
+            background-color: #3cb371; /* Medium sea green button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+        }
+
+        #fetch-joke-btn:hover {
+            background-color: #2e8b57; /* Sea green hover */
+        }
+
+        .joke-error-message {
+            color: #ff4d4d; /* Keep error message red for visibility */
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Advanced Styling and JavaScript</h1>
+
+    <h2>1. Responsive Design Example</h2>
+    <div class="responsive-container">
+        <aside class="responsive-sidebar">
+            <h3>Advanced Styling</h3>
+            <p>Advanced styling techniques in CSS, such as Flexbox and Grid, enable the creation of flexible and responsive layouts. Media queries allow us to apply different styles based on screen size, ensuring optimal viewing experiences across various devices. We can also leverage transitions and animations to add visual interest and improve user engagement.</p>
+        </aside>
+        <main class="responsive-main-content">
+            <h3>JavaScript Functionality</h3>
+            <p>JavaScript adds interactivity to web pages. From handling user events and manipulating the DOM (Document Object Model) to making asynchronous requests (like fetching jokes from an API), JavaScript is crucial for dynamic web applications. Concepts like variables, functions, loops, and conditional statements are fundamental to its use. Advanced topics include closures, promises, and asynchronous/await for managing complex operations.</p>
+        </main>
+    </div>
+
+    <h2>2. Image Carousel</h2>
+    <div class="carousel-container">
+        <div class="carousel-slide" id="carousel-slide">
+            <img src="ApexPlanet.png" alt="Apex Planet" class="carousel-image">
+            <img src="car.jpg" alt="Car Image" class="carousel-image">
+        </div>
+        <button class="carousel-button prev" onclick="prevSlide()">&#10094;</button>
+        <button class="carousel-button next" onclick="nextSlide()">&#10095;</button>
+    </div>
+
+    <h2>3. Interactive Quiz</h2>
+    <div class="quiz-container">
+        <h3 class="quiz-question" id="quiz-question"></h3>
+        <div class="quiz-answer-buttons" id="quiz-answer-buttons"></div>
+        <button class="quiz-next-button" id="quiz-next-button" onclick="nextQuizQuestion()">Next Question</button>
+        <div class="quiz-results" id="quiz-results" style="display: none;"></div>
+    </div>
+
+    <h2>4. Fetch Data from a Joke API</h2>
+    <div class="joke-fetcher-container">
+        <h3>Random Joke</h3>
+        <p id="joke-text">Click the button to get a joke!</p>
+        <button id="fetch-joke-btn">Get Another Joke</button>
+        <p id="error-message" class="joke-error-message" style="display: none;"></p>
+    </div>
+
+    <script>
+        // --- Image Carousel JavaScript ---
+        const carouselSlide = document.getElementById('carousel-slide');
+        const carouselImages = document.querySelectorAll('.carousel-image');
+        let counter = 0;
+        const size = carouselImages[0].offsetWidth; // Width of one image
+
+        carouselSlide.style.transform = `translateX(${-size * counter}px)`;
+
+        function nextSlide() {
+            if (counter >= carouselImages.length - 1) {
+                counter = 0; // Go back to the first image
+            } else {
+                counter++;
+            }
+            carouselSlide.style.transition = 'transform 0.5s ease-in-out';
+            carouselSlide.style.transform = `translateX(${-size * counter}px)`;
+        }
+
+        function prevSlide() {
+            if (counter <= 0) {
+                counter = carouselImages.length - 1; // Go to the last image
+            } else {
+                counter--;
+            }
+            carouselSlide.style.transition = 'transform 0.5s ease-in-out';
+            carouselSlide.style.transform = `translateX(${-size * counter}px)`;
+        }
+
+        // --- Quiz JavaScript ---
+        const quizQuestions = [
+            {
+                question: "What is the capital of Japan?",
+                answers: ["Seoul", "Beijing", "Tokyo", "Kyoto"],
+                correctAnswer: "Tokyo"
+            },
+            {
+                question: "Which gas makes up most of Earth's atmosphere?",
+                answers: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"],
+                correctAnswer: "Nitrogen"
+            },
+            {
+                question: "What is the value of Pi (to two decimal places)?",
+                answers: ["3.12", "3.14", "3.16", "3.18"],
+                correctAnswer: "3.14"
+            }
+        ];
+
+        let currentQuizQuestionIndex = 0;
+        let quizScore = 0;
+        const quizQuestionElement = document.getElementById('quiz-question');
+        const quizAnswerButtonsElement = document.getElementById('quiz-answer-buttons');
+        const quizNextButton = document.getElementById('quiz-next-button');
+        const quizResultsElement = document.getElementById('quiz-results');
+
+        function startQuiz() {
+            currentQuizQuestionIndex = 0;
+            quizScore = 0;
+            quizNextButton.style.display = 'none';
+            quizResultsElement.style.display = 'none';
+            displayQuizQuestion();
+        }
+
+        function displayQuizQuestion() {
+            resetQuizState();
+            const currentQuestion = quizQuestions[currentQuizQuestionIndex];
+            quizQuestionElement.textContent = `${currentQuizQuestionIndex + 1}. ${currentQuestion.question}`;
+            currentQuestion.answers.forEach(answer => {
+                const button = document.createElement('button');
+                button.textContent = answer;
+                button.classList.add('quiz-answer-btn');
+                button.addEventListener('click', () => checkQuizAnswer(answer));
+                quizAnswerButtonsElement.appendChild(button);
+            });
+        }
+
+        function resetQuizState() {
+            while (quizAnswerButtonsElement.firstChild) {
+                quizAnswerButtonsElement.removeChild(quizAnswerButtonsElement.firstChild);
+            }
+        }
+
+        function checkQuizAnswer(selectedAnswer) {
+            const currentQuestion = quizQuestions[currentQuizQuestionIndex];
+            const correct = selectedAnswer === currentQuestion.correctAnswer;
+            if (correct) {
+                quizScore++;
+            }
+            Array.from(quizAnswerButtonsElement.children).forEach(button => {
+                if (button.textContent === currentQuestion.correctAnswer) {
+                    button.style.backgroundColor = 'lightgreen';
+                }
+                button.disabled = true;
+            });
+            quizNextButton.style.display = 'block';
+        }
+
+        function nextQuizQuestion() {
+            currentQuizQuestionIndex++;
+            if (currentQuizQuestionIndex < quizQuestions.length) {
+                displayQuizQuestion();
+            } else {
+                showQuizResults();
+            }
+        }
+
+        function showQuizResults() {
+            resetQuizState();
+            quizQuestionElement.textContent = `You scored ${quizScore} out of ${quizQuestions.length}!`;
+            quizNextButton.textContent = 'Play Again';
+            quizNextButton.style.display = 'block';
+            quizResultsElement.style.display = 'block';
+            quizNextButton.onclick = startQuiz;
+        }
+
+        // Start the quiz when the page loads
+        startQuiz();
+
+        // --- Joke Fetcher JavaScript ---
+        const jokeTextElement = document.getElementById('joke-text');
+        const fetchJokeButton = document.getElementById('fetch-joke-btn');
+        const errorMessageElement = document.getElementById('error-message');
+
+        fetchJokeButton.addEventListener('click', fetchRandomJoke);
+
+        async function fetchRandomJoke() {
+            jokeTextElement.textContent = 'Loading...';
+            errorMessageElement.style.display = 'none';
+            try {
+                const response = await fetch('https://v2.jokeapi.dev/joke/Any');
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const data = await response.json();
+                if (data.type === 'single') {
+                    jokeTextElement.textContent = data.joke;
+                } else if (data.type === 'twopart') {
+                    jokeTextElement.textContent = `${data.setup} ... ${data.delivery}`;
+                } else {
+                    jokeTextElement.textContent = 'Failed to get a joke in the expected format.';
+                }
+            } catch (error) {
+                console.error('Error fetching joke:', error);
+                jokeTextElement.textContent = '';
+                errorMessageElement.textContent = 'Failed to fetch a joke. Please try again later.';
+                errorMessageElement.style.display = 'block';
+            }
+        }
+
+        // Fetch an initial joke when the page loads
+        fetchRandomJoke();
+    </script>
+
+</body>
+</html>
